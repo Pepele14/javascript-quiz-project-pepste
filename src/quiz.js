@@ -8,9 +8,7 @@ class Quiz {
     this.currentQuestionIndex = 0;
     this.correctAnswers = 0;
   }
-  //   filterQuestionsByDifficulty(difficulty) {
-  //     this.questions.filter((e) => {});
-  //   }
+
   getQuestion() {
     return this.questions[this.currentQuestionIndex];
   }
