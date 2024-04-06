@@ -38,10 +38,27 @@ class Quiz {
     }
     return false;
   }
+
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty !== 1 && difficulty !== 2 && difficulty !== 3) {
+      return this.questions;
+    }
+    this.questions = this.questions.filter(function (question) {
+      return question.difficulty === difficulty;
+    });
+    return this.questions;
+  }
+
+  averageDifficulty() {
+    const totDifficulty = this.questions.reduce(function (
+      accumulator,
+      question
+    ) {
+      return accumulator + question.difficulty;
+    },
+    0);
+    const avgDifficulty = totDifficulty / this.questions.length;
+
+    return avgDifficulty;
+  }
 }
-
-// should increase 'correctAnswers' by 1 when a correct answer is passed as an argument
-// should check if the answer is correct by comparing it to the 'answer' property of the current question
-
-// should receive 1 argument (answer - string).
-// should increase correctAnswers by 1 when called with a correct answer for the current question
