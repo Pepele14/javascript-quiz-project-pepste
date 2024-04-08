@@ -84,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // showResults(); //- Displays the end view and the quiz results
 
   function showQuestion() {
-    // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
       showResults();
       return;
@@ -166,7 +165,34 @@ document.addEventListener("DOMContentLoaded", () => {
       showQuestion(); // Aktualisiere die Anzeige für die nächste Frage
     }
   }
+  function startQuiz() {
+    timer = setInterval(showTime, 1000);
+  }
 
+  function showTime() {
+    if (quiz.timeRemaining > 0) {
+      quiz.timeRemaining--; // Reduziere die verbleibende Zeit jede Sekunde um 1
+
+      const minutes = Math.floor(quiz.timeRemaining / 60)
+        .toString()
+        .padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+      // Aktualisiere die Anzeige der verbleibenden Zeit
+      const timeRemainingContainer = document.getElementById("timeRemaining");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    } else {
+      endQuiz(); // Beende das Quiz, wenn die Zeit abgelaufen ist
+    }
+  }
+
+  function endQuiz() {
+    clearInterval(timer); // Stoppe den Timer
+    showResults(); // Zeige die Ergebnisse
+  }
+
+  // Stelle sicher, dass startQuiz auf
+  startQuiz();
   // YOUR CODE HERE:
   //
   // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
