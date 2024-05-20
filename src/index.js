@@ -71,7 +71,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timerInterval; // Variable to store the timer interval ID
+
+  // Function to start the quiz timer
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      quiz.timeRemaining--; // Decrease time remaining by 1 second
+      const minutes = Math.floor(quiz.timeRemaining / 60)
+        .toString()
+        .padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+      // Check if time has run out
+      if (quiz.timeRemaining <= 0) {
+        clearInterval(timerInterval); // Clear the timer interval
+        showResults(); // Show the quiz results
+      }
+    }, 1000); // Run the timer update every second (1000 milliseconds)
+  }
+
+  // Start the timer when the DOM content is loaded
+  startTimer();
 
   /************  EVENT LISTENERS  ************/
 
@@ -193,6 +214,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
+
+  clearInterval(timerInterval);
+  quiz.timeRemaining = quizDuration; // Reset the timer to the initial duration
+  startTimer();
 
   // resetButtonHandler()
   const resetButton = document.querySelector("#restartButton");
